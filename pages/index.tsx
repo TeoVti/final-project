@@ -1,4 +1,15 @@
 import Head from 'next/head';
+import Link from 'next/link';
+import React, { useState } from 'react';
+import {
+  Button,
+  Form,
+  Input,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+} from 'reactstrap';
 import Layout from '../Components/Layout';
 
 type Props = {
@@ -6,6 +17,9 @@ type Props = {
 };
 
 export default function Home(props: Props) {
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
   return (
     <div>
       <Head>
@@ -19,10 +33,57 @@ export default function Home(props: Props) {
         <h1 className="home-text">
           Find your desired shift in Health Care to work whenever you like
         </h1>
-        <button className="find-job">Find Shifts</button>
+
+        <Link href="/jobs">
+          <a>
+            <button className="find-job">Find Shift</button>
+          </a>
+        </Link>
+        <span>
+          {' '}
+          {props.username ? (
+            <Link href="/jobs">
+              <a>
+                <button className="find-job">Post Shift</button>
+              </a>
+            </Link>
+          ) : (
+            <Link href="/login">
+              <a>
+                <button className="find-job">Post Shift</button>
+              </a>
+            </Link>
+          )}
+        </span>
       </div>
 
       <img className="hero" src="/hero.png" alt="hero"></img>
+
+      <Modal isOpen={modal} toggle={toggle} fade={false}>
+        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+        <ModalBody>
+          <Form>
+            <Input placeholder="Job Title" bsSize="lg" />
+            <Input type="select">
+              <option>Select Region</option>
+            </Input>
+            <Input type="select">
+              <option>Experience Level</option>
+            </Input>
+
+            <Input placeholder="pay" />
+            <Input placeholder="details" />
+          </Form>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={toggle}>
+            Do Something
+          </Button>{' '}
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 }

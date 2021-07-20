@@ -18,7 +18,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/jobs.js",
+    "pages/jobs.tsx",
     "util/database.js"
   ],
   "exclude": ["node_modules"]

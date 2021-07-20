@@ -1,7 +1,6 @@
 import { getUserById } from '../../../util/database';
 
 export default async function SingleUser(req, res) {
-  console.log(req.method);
 
   if (req.method === 'GET') {
     const user = await getUserById(req.query.userId);

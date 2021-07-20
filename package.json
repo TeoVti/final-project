@@ -10,8 +10,8 @@
     "migrate": "dotenv ley"
   },
   "dependencies": {
-    "@emotion/react": "^11.4.0",
     "argon2": "^0.28.2",
+    "bootstrap": "^5.0.2",
     "camelcase-keys": "^7.0.0",
     "cookie": "^0.4.1",
     "crypto": "^1.0.1",
@@ -24,7 +24,9 @@
     "next": "11.0.1",
     "postgres": "^2.0.0-beta.5",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-bootstrap": "^1.6.1",
+    "react-dom": "^17.0.2",
+    "reactstrap": "^8.9.0"
   },
   "devDependencies": {
     "@types/cookie": "^0.4.1",

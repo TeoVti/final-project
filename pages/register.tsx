@@ -54,7 +54,7 @@ export default function Register(props: Props) {
 
               // Navigate to registration successful page when
               // new account has been successfully created
-              router.push(`/about`);
+              router.push(`/jobs`);
             }}
           >
             <div>
