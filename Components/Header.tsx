@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 
 type Props = {
   username?: string;
@@ -7,9 +8,38 @@ type Props = {
 
 export default function Header(props: Props) {
   const router = useRouter();
+  const [navBackground, setNavBackground] = useState(false);
+  const navRef = useRef();
+  navRef.current = navBackground;
+  useEffect(() => {
+    const handleScroll = () => {
+      const show = window.scrollY > 50;
+      if (navRef.current !== show) {
+        setNavBackground(show);
+      }
+    };
+    document.addEventListener('scroll', handleScroll);
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return (
-    <header className="header">
-      <img className="logo" src="/logo.png" alt="hero"></img>
+    <header
+      className="header"
+      style={{
+        transition: '1s',
+        backgroundColor: navBackground ? 'white' : 'transparent',
+      }}
+    >
+      <Link href="/" passHref>
+        <div className="logo-name">
+          {
+            // eslint-disable-next-line @next/next/no-img-element
+            <img className="logo" src="/logo.png" alt="hero"></img>
+          }
+          <h4>MedJobs</h4>
+        </div>
+      </Link>
       <div className="nav">
         <span className={router.pathname == '/' ? 'active' : ''}>
           <Link href="/">
@@ -22,11 +52,6 @@ export default function Header(props: Props) {
         >
           <Link href="/jobs">
             <a>Jobs</a>
-          </Link>
-        </span>
-        <span className={router.pathname == '/about' ? 'active' : ''}>
-          <Link href="/about">
-            <a className="about-us">About Us</a>
           </Link>
         </span>
         <span className={router.pathname == '/login' ? 'active' : ''}>

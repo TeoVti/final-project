@@ -1,15 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import {
-  Button,
-  Form,
-  Input,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from 'reactstrap';
 import Layout from '../Components/Layout';
 
 type Props = {
@@ -30,13 +21,14 @@ export default function Home(props: Props) {
       <Layout username={props.username} />
       <div className="square"></div>
       <div className="hero-text">
-        <h1 className="home-text">
-          Find your desired shift in Health Care to work whenever you like
-        </h1>
-
+        <h1 className="home-text">The platform for substitute doctors</h1>
+        <p className="hero-par">
+          We are the leading French job platform for medical personnel in
+          substitute roles across specialties
+        </p>
         <Link href="/jobs">
           <a>
-            <button className="find-job">Find Shift</button>
+            <button className="find-job">Find Job</button>
           </a>
         </Link>
         <span>
@@ -44,46 +36,26 @@ export default function Home(props: Props) {
           {props.username ? (
             <Link href="/jobs">
               <a>
-                <button className="find-job">Post Shift</button>
+                <button className="find-job">Post Job</button>
               </a>
             </Link>
           ) : (
             <Link href="/login">
               <a>
-                <button className="find-job">Post Shift</button>
+                <button className="find-job">Post Job</button>
               </a>
             </Link>
           )}
         </span>
       </div>
-
-      <img className="hero" src="/hero.png" alt="hero"></img>
-
-      <Modal isOpen={modal} toggle={toggle} fade={false}>
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
-        <ModalBody>
-          <Form>
-            <Input placeholder="Job Title" bsSize="lg" />
-            <Input type="select">
-              <option>Select Region</option>
-            </Input>
-            <Input type="select">
-              <option>Experience Level</option>
-            </Input>
-
-            <Input placeholder="pay" />
-            <Input placeholder="details" />
-          </Form>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={toggle}>
-            Do Something
-          </Button>{' '}
-          <Button color="secondary" onClick={toggle}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </Modal>
+      {
+        // eslint-disable-next-line @next/next/no-img-element
+        <img className="hero" src="/hero.png" alt="hero"></img>
+      }
+      {
+        // eslint-disable-next-line @next/next/no-img-element
+        <img className="hero-dots" src="/dotss.png" alt="hero"></img>
+      }
     </div>
   );
 }

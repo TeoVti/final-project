@@ -433,3 +433,55 @@ export async function getJobByJobId(jobId) {
   `;
   return jobs.map((job) => camelcaseKeys(job))[0];
 }
+
+export async function getJobsByRegionTitle(regionTitle) {
+  const jobs = await sql`
+  SELECT
+    DISTINCT jobs.id as id,
+    jobs.title as title,
+    exp_id,
+    region_id,
+    slug,
+    pay,
+    details,
+    experience.title as experience_title,
+    regions.title as regions_title
+  FROM
+    jobs,
+    regions,
+    experience
+  WHERE
+    regions.title = ${regionTitle}
+  AND
+    exp_id = experience.id
+  AND
+    region_id = regions.id
+  `;
+  return jobs.map((job) => camelcaseKeys(job));
+}
+
+export async function getJobsByExperienceTitle(expTitle) {
+  const jobs = await sql`
+  SELECT
+    DISTINCT jobs.id as id,
+    jobs.title as title,
+    exp_id,
+    region_id,
+    slug,
+    pay,
+    details,
+    experience.title as experience_title,
+    regions.title as regions_title
+  FROM
+    jobs,
+    regions,
+    experience
+  WHERE
+    experience.title = ${expTitle}
+  AND
+    exp_id = experience.id
+  AND
+    region_id = regions.id
+  `;
+  return jobs.map((job) => camelcaseKeys(job));
+}

@@ -93,7 +93,10 @@ export default function Login(props: Props) {
         </div>
       </form>
       <div>
-        <h2>Don't have an account?</h2>
+        {
+          // eslint-disable-next-line react/no-unescaped-entities
+          <h2>Don't have an account?</h2>
+        }
         <Link href="/register">
           <a className="register">Register</a>
         </Link>

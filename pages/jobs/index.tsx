@@ -12,7 +12,12 @@ import {
   ModalHeader,
 } from 'reactstrap';
 import Layout from '../../Components/Layout';
-import { getExperience, getRegions } from '../../util/database';
+import {
+  getExperience,
+  getJobsByExperienceTitle,
+  getJobsByRegionTitle,
+  getRegions,
+} from '../../util/database';
 
 type Props = {
   username?: string;
@@ -40,11 +45,40 @@ export default function Jobs(props: Props) {
   const [expId, setExpId] = useState('');
   const [errors, setErrors] = useState<any[]>();
   const router = useRouter();
+  const [allJobs, setAllJobs] = useState(props.allJobs);
 
-  //console.log(props);
+  // Handle click on "Select By Category" Button
+  const handleJobByRegionClick = (title: string) => {
+    // Filter jobs by category on the frontend
+    function getJobsByRegionTitle(job: any) {
+      // returns a boolean
+      const jobRegionTitle = job.regionsTitle;
+      // console.log(jobRegionTitle);
+      return jobRegionTitle === title;
+    }
+    const jobsByRegionTitle = props.allJobs.filter(getJobsByRegionTitle);
+    // event.preventDefault();
+    return setAllJobs(jobsByRegionTitle);
+  };
+
+  const handleJobByExperienceClick = (title: string) => {
+    // Filter jobs by category on the frontend
+    function getJobsByExperienceTitle(job: any) {
+      // returns a boolean
+      const jobExpTitle = job.experienceTitle;
+      // console.log(jobRegionTitle);
+      return jobExpTitle === title;
+    }
+    const jobsByExpTitle = props.allJobs.filter(getJobsByExperienceTitle);
+    // event.preventDefault();
+    return setAllJobs(jobsByExpTitle);
+  };
+
+  // console.log(handleJobByExperienceClick('1-3 Years'));
 
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
+
   async function clickHandler() {
     const response = await fetch(`/api/jobs/create`, {
       method: 'POST',
@@ -210,13 +244,16 @@ export default function Jobs(props: Props) {
                   type="select"
                   value={regionId}
                   onChange={(event) => {
-                    setRegionId(event.currentTarget.value);
+                    setRegionId(event.currentTarget.value),
+                      handleJobByRegionClick(event.currentTarget.value);
                   }}
                 >
-                  <option value="">Select Region</option>
+                  <option value="" disabled>
+                    Select Region
+                  </option>
                   {props.regions.map((region) => {
                     return (
-                      <option key={region.id} value={region.id}>
+                      <option key={region.id} value={region.title}>
                         {region.title}
                       </option>
                     );
@@ -226,13 +263,16 @@ export default function Jobs(props: Props) {
                   type="select"
                   value={expId}
                   onChange={(event) => {
-                    setExpId(event.currentTarget.value);
+                    setExpId(event.currentTarget.value),
+                      handleJobByExperienceClick(event.currentTarget.value);
                   }}
                 >
-                  <option value="">Experience Level</option>
+                  <option value="" disabled>
+                    Experience Level
+                  </option>
                   {props.experience.map((exp) => {
                     return (
-                      <option key={exp.id} value={exp.id}>
+                      <option key={exp.id} value={exp.title}>
                         {exp.title}
                       </option>
                     );
@@ -241,7 +281,7 @@ export default function Jobs(props: Props) {
               </div>
 
               <div className="row">
-                {props.allJobs.map((job: any, index: number) => {
+                {allJobs.map((job: any, index: number) => {
                   return (
                     <div className="col-sm-5" key={index}>
                       <div className="card">
@@ -286,6 +326,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const regions = await getRegions();
   const experience = await getExperience();
+  const regionFiltered = await getJobsByRegionTitle(regions[0].title);
+  console.log(regionFiltered);
+  console.log(regions[0].title);
+
   return {
     props: { ...json, regions, experience },
   };
