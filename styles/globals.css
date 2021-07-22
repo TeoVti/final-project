@@ -124,3 +124,96 @@ a {
 .about-us {
   margin-right: 2em;
 }
+.register-card {
+  margin-top: 8em;
+  margin-left: 10em;
+}
+.create-account {
+  padding: 15px;
+  border-radius: 7px;
+  color: rgb(255, 255, 255);
+  background-color: #50b9c5;
+  border: solid #50b9c5;
+  cursor: pointer;
+  font-size: 20px;
+}
+.register-input {
+  border-radius: 7px;
+  border-color: #00000029;
+  width: 20em;
+  margin-bottom: 2em;
+  height: 3em;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+.square-reg {
+  position: relative;
+  margin-top: -30em;
+  float: right;
+  width: 35em;
+  height: 25em;
+  background-color: #f6c44d;
+}
+.reg-dots {
+  width: 25em;
+  margin-top: -20em;
+  margin-left: 49em;
+  border-radius: 10px;
+}
+.card {
+  position: revert !important;
+}
+.filter {
+  display: flex;
+}
+.card-header {
+  font-size: 1.5em;
+  text-align: center;
+  padding: 1rem 1rem;
+  margin-bottom: 0;
+  background-color: transparent !important;
+  border-bottom: none !important;
+}
+#location {
+  margin-right: 0.3em;
+  margin-top: 0.3em;
+  width: 0.8em;
+  height: 1em;
+}
+.card-det {
+  display: flex;
+}
+#exp-icon {
+  margin-right: 0.3em;
+  margin-top: 0.3em;
+  width: 0.8em;
+  height: 1em;
+  margin-left: 2em;
+}
+
+.see-job {
+  padding: 0.3em;
+  border-radius: 7px;
+  color: rgb(255, 255, 255);
+  background-color: #50b9c5;
+  border: solid #50b9c5;
+  cursor: pointer;
+  font-size: 20px;
+}
+.job-board {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.card {
+  border: none !important;
+  background-color: rgb(239, 243, 245) !important;
+  margin-top: 1em;
+}
+.row {
+  margin: 0 auto !important;
+  justify-content: space-around;
+}

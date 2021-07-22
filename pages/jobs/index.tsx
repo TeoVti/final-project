@@ -1,3 +1,4 @@
+import { get } from 'js-cookie';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -46,6 +47,8 @@ export default function Jobs(props: Props) {
   const [errors, setErrors] = useState<any[]>();
   const router = useRouter();
   const [allJobs, setAllJobs] = useState(props.allJobs);
+  const [regTitle, setRegTitle] = useState('Normandie');
+  const [expTitle, setExpTitle] = useState('1-3 Years');
 
   // Handle click on "Select By Category" Button
   const handleJobByRegionClick = (title: string) => {
@@ -74,7 +77,17 @@ export default function Jobs(props: Props) {
     return setAllJobs(jobsByExpTitle);
   };
 
-  // console.log(handleJobByExperienceClick('1-3 Years'));
+  let gg = allJobs.find((job: any) => {
+    let isVisible = true;
+    if (regTitle && regTitle !== job.regionsTitle) {
+      isVisible = false;
+    }
+    if (expTitle && expTitle !== job.experienceTitle) {
+      isVisible = false;
+    }
+    return isVisible;
+  });
+  console.log(gg);
 
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -119,7 +132,7 @@ export default function Jobs(props: Props) {
       </Head>
       <Layout username={props.username} />
       <div className="jobs-page">
-        <h1>Job Board</h1>
+        <h1 className="job-board">Job Board</h1>
         <div>
           {' '}
           {props.username ? (
@@ -236,10 +249,8 @@ export default function Jobs(props: Props) {
             </div>
           ) : (
             <div>
-              <h2>All Jobs</h2>
-              <h5>Filter :</h5>
-              <div>
-                {' '}
+              <div className="filter">
+                <h5>Filter</h5>
                 <Input
                   type="select"
                   value={regionId}
@@ -280,22 +291,39 @@ export default function Jobs(props: Props) {
                 </Input>
               </div>
 
-              <div className="row">
+              <div className="container row">
                 {allJobs.map((job: any, index: number) => {
                   return (
                     <div className="col-sm-5" key={index}>
                       <div className="card">
-                        <h5 className="card-header">
-                          {job.regionsTitle} {job.experienceTitle}
-                        </h5>
+                        <h5 className="card-header">{job.username}</h5>
 
                         <div className="card-body">
                           <h3 className="card-title"> {job.title}</h3>
-                          <p className="card-text">{job.details}</p>
-                          <a
-                            href={`jobs/${job.id}`}
-                            className="btn btn-primary"
-                          >
+                          <div className="card-det">
+                            {
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img
+                                className="card-text"
+                                id="location"
+                                src="/loc.png"
+                                alt="location"
+                              ></img>
+                            }
+
+                            <p className="card-text">{job.regionsTitle}</p>
+                            {
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img
+                                className="card-text"
+                                id="exp-icon"
+                                src="/exp.png"
+                                alt="experience icon"
+                              ></img>
+                            }
+                            <p className="card-text">{job.experienceTitle}</p>
+                          </div>
+                          <a href={`jobs/${job.id}`} className="see-job">
                             See Job
                           </a>
                         </div>
@@ -327,8 +355,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const regions = await getRegions();
   const experience = await getExperience();
   const regionFiltered = await getJobsByRegionTitle(regions[0].title);
-  console.log(regionFiltered);
-  console.log(regions[0].title);
+  //console.log(regionFiltered);
+  //console.log(regions[0].title);
 
   return {
     props: { ...json, regions, experience },

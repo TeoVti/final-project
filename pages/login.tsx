@@ -21,85 +21,95 @@ export default function Login(props: Props) {
   return (
     <div>
       <Head>
-        <title>Register</title>
+        <title>Log in</title>
       </Head>
       <Layout username={props.username} />
-      <div className="login-page"></div>
-      <form
-        onSubmit={async (event) => {
-          event.preventDefault();
+      <div className="login-page">
+        <div className="register-card">
+          <form
+            onSubmit={async (event) => {
+              event.preventDefault();
 
-          // Send the username and password to the API
-          // for verification
-          const response = await fetch(`/api/login`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              username: username,
-              password: password,
-            }),
-          });
+              // Send the username and password to the API
+              // for verification
+              const response = await fetch(`/api/login`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  username: username,
+                  password: password,
+                }),
+              });
 
-          const json = (await response.json()) as LoginResponse;
+              const json = (await response.json()) as LoginResponse;
 
-          if ('errors' in json) {
-            setError(json.errors[0].message);
-            return;
-          }
-          props.refreshUsername();
-          // Navigate to the user's page when
-          // they have been successfully created
-          router.push(`/jobs`);
-        }}
-      >
-        <div>
+              if ('errors' in json) {
+                setError(json.errors[0].message);
+                return;
+              }
+              props.refreshUsername();
+              // Navigate to the user's page when
+              // they have been successfully created
+              router.push(`/jobs`);
+            }}
+          >
+            <div>
+              <div>
+                <h3 style={{ marginBottom: '1em' }}>Log in to MedJobs</h3>
+                <div>
+                  <label>
+                    <input
+                      className="register-input"
+                      data-cy="users-management-create-username"
+                      value={username}
+                      placeholder="Username"
+                      onChange={(event) => {
+                        setUsername(event.currentTarget.value);
+                      }}
+                    />
+                  </label>
+                </div>
+
+                <div>
+                  <label>
+                    <input
+                      className="register-input"
+                      data-cy="users-management-create-password"
+                      value={password}
+                      placeholder="Password"
+                      type="password"
+                      onChange={(event) => {
+                        setPassword(event.currentTarget.value);
+                      }}
+                    />
+                  </label>
+                </div>
+
+                <button className="create-account">Log in</button>
+
+                <div>{error}</div>
+              </div>
+            </div>
+          </form>
           <div>
-            <h2>
-              <u>Login</u>
-            </h2>
-            <div>
-              <label>
-                <input
-                  data-cy="users-management-create-username"
-                  value={username}
-                  placeholder="Username"
-                  onChange={(event) => {
-                    setUsername(event.currentTarget.value);
-                  }}
-                />
-              </label>
-            </div>
-
-            <div>
-              <label>
-                <input
-                  data-cy="users-management-create-password"
-                  value={password}
-                  placeholder="Password"
-                  type="password"
-                  onChange={(event) => {
-                    setPassword(event.currentTarget.value);
-                  }}
-                />
-              </label>
-            </div>
-
-            <button>Login</button>
-
-            <div>{error}</div>
+            {
+              // eslint-disable-next-line react/no-unescaped-entities
+              <h5>Don't have an account?</h5>
+            }
+            <Link href="/register">
+              <a className="register">Register here</a>
+            </Link>
           </div>
         </div>
-      </form>
-      <div>
-        {
-          // eslint-disable-next-line react/no-unescaped-entities
-          <h2>Don't have an account?</h2>
-        }
-        <Link href="/register">
-          <a className="register">Register</a>
-        </Link>
+        <div>
+          <div className="square-reg"></div>
+          {
+            // eslint-disable-next-line @next/next/no-img-element
+            <img className="reg-dots" src="/dots.png" alt="hero"></img>
+          }
+        </div>
       </div>
     </div>
   );
@@ -118,7 +128,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     // https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
     return {
       redirect: {
-        destination: `/about`,
+        destination: `/jobs`,
         permanent: false,
       },
     };

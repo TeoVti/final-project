@@ -10,7 +10,7 @@ exports.up = async function up(sql) {
       region_id INT REFERENCES regions (id) ON DELETE CASCADE NOT NULL,
 			pay varchar(100),
 			details varchar(1000),
-      slug varchar(100) UNIQUE NOT NULL
+      slug varchar(100) NOT NULL
     )
   `;
 };

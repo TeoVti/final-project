@@ -26,8 +26,8 @@ export default function Register(props: Props) {
       </Head>
       <Layout username={props.username} />
       <div className="register-page">
-        <div>
-          <h1>Register</h1>
+        <div className="register-card">
+          <h3 style={{ marginBottom: '1em' }}>Join MedJobs</h3>
           <form
             onSubmit={async (event) => {
               event.preventDefault();
@@ -59,10 +59,10 @@ export default function Register(props: Props) {
           >
             <div>
               <label>
-                Registration Number:
                 <input
+                  className="register-input"
                   value={username}
-                  placeholder="12xxxx"
+                  placeholder="Registration Number"
                   onChange={(event) => {
                     setUsername(event.currentTarget.value);
                   }}
@@ -72,11 +72,11 @@ export default function Register(props: Props) {
 
             <div>
               <label>
-                Email:
                 <input
+                  className="register-input"
                   value={email}
                   type="email"
-                  placeholder="maria_h@gmail.com"
+                  placeholder="Email"
                   onChange={(event) => {
                     setEmail(event.currentTarget.value);
                   }}
@@ -86,10 +86,10 @@ export default function Register(props: Props) {
 
             <div>
               <label>
-                Password:
                 <input
+                  className="register-input"
                   value={password}
-                  placeholder="******"
+                  placeholder="Password"
                   type="password"
                   onChange={(event) => {
                     setPassword(event.currentTarget.value);
@@ -97,11 +97,17 @@ export default function Register(props: Props) {
                 />
               </label>
             </div>
-            <button className="button-default">Create Account</button>
+            <button className="create-account">Create Account</button>
             <div>{error}</div>
           </form>
         </div>
-        <div></div>
+        <div>
+          <div className="square-reg"></div>
+          {
+            // eslint-disable-next-line @next/next/no-img-element
+            <img className="reg-dots" src="/dots.png" alt="hero"></img>
+          }
+        </div>
       </div>
     </div>
   );

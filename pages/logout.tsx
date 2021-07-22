@@ -20,7 +20,7 @@ export default function Logout(props: Props) {
       </Head>
       <Layout username={props.username} />
       <div>
-        <h1>You've successfully logged out</h1>
+        <h1>You{"'"}ve successfully logged out</h1>
         <div></div>
       </div>
     </div>
