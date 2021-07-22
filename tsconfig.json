@@ -19,7 +19,8 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/jobs.tsx",
-    "util/database.js"
+    "util/database.js",
+    "Components/AllJobs.js"
   ],
   "exclude": ["node_modules"]
 }

@@ -27,7 +27,7 @@ export default function Home(props: Props) {
           substitute roles across specialties
         </p>
         <Link href="/jobs">
-          <a>
+          <a style={{ marginRight: '3em' }}>
             <button className="find-job">Find Job</button>
           </a>
         </Link>

@@ -12,6 +12,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from 'reactstrap';
+import { AllJobs } from '../../Components/AllJobs';
 import Layout from '../../Components/Layout';
 import {
   getExperience,
@@ -47,47 +48,12 @@ export default function Jobs(props: Props) {
   const [errors, setErrors] = useState<any[]>();
   const router = useRouter();
   const [allJobs, setAllJobs] = useState(props.allJobs);
-  const [regTitle, setRegTitle] = useState('Normandie');
-  const [expTitle, setExpTitle] = useState('1-3 Years');
+  const [regTitle, setRegTitle] = useState('');
+  const [expTitle, setExpTitle] = useState('');
 
   // Handle click on "Select By Category" Button
-  const handleJobByRegionClick = (title: string) => {
-    // Filter jobs by category on the frontend
-    function getJobsByRegionTitle(job: any) {
-      // returns a boolean
-      const jobRegionTitle = job.regionsTitle;
-      // console.log(jobRegionTitle);
-      return jobRegionTitle === title;
-    }
-    const jobsByRegionTitle = props.allJobs.filter(getJobsByRegionTitle);
-    // event.preventDefault();
-    return setAllJobs(jobsByRegionTitle);
-  };
 
-  const handleJobByExperienceClick = (title: string) => {
-    // Filter jobs by category on the frontend
-    function getJobsByExperienceTitle(job: any) {
-      // returns a boolean
-      const jobExpTitle = job.experienceTitle;
-      // console.log(jobRegionTitle);
-      return jobExpTitle === title;
-    }
-    const jobsByExpTitle = props.allJobs.filter(getJobsByExperienceTitle);
-    // event.preventDefault();
-    return setAllJobs(jobsByExpTitle);
-  };
-
-  let gg = allJobs.find((job: any) => {
-    let isVisible = true;
-    if (regTitle && regTitle !== job.regionsTitle) {
-      isVisible = false;
-    }
-    if (expTitle && expTitle !== job.experienceTitle) {
-      isVisible = false;
-    }
-    return isVisible;
-  });
-  console.log(gg);
+  // console.log(props.allJobs);
 
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -109,8 +75,6 @@ export default function Jobs(props: Props) {
     });
 
     const {
-      user,
-      sluggedTitle,
       errors: [errorMessage],
     } = await response.json();
 
@@ -251,86 +215,70 @@ export default function Jobs(props: Props) {
             <div>
               <div className="filter">
                 <h5>Filter</h5>
-                <Input
-                  type="select"
-                  value={regionId}
-                  onChange={(event) => {
-                    setRegionId(event.currentTarget.value),
-                      handleJobByRegionClick(event.currentTarget.value);
-                  }}
-                >
-                  <option value="" disabled>
-                    Select Region
-                  </option>
-                  {props.regions.map((region) => {
-                    return (
-                      <option key={region.id} value={region.title}>
-                        {region.title}
-                      </option>
-                    );
-                  })}
-                </Input>
-                <Input
-                  type="select"
-                  value={expId}
-                  onChange={(event) => {
-                    setExpId(event.currentTarget.value),
-                      handleJobByExperienceClick(event.currentTarget.value);
-                  }}
-                >
-                  <option value="" disabled>
-                    Experience Level
-                  </option>
-                  {props.experience.map((exp) => {
-                    return (
-                      <option key={exp.id} value={exp.title}>
-                        {exp.title}
-                      </option>
-                    );
-                  })}
-                </Input>
+                <AllJobs
+                  options={props.regions}
+                  value={regTitle}
+                  filterSetter={setRegTitle}
+                  name="reg"
+                />
+                <AllJobs
+                  options={props.experience}
+                  value={expTitle}
+                  filterSetter={setExpTitle}
+                  name="exp"
+                />
               </div>
-
               <div className="container row">
-                {allJobs.map((job: any, index: number) => {
-                  return (
-                    <div className="col-sm-5" key={index}>
-                      <div className="card">
-                        <h5 className="card-header">{job.username}</h5>
+                {allJobs
+                  .filter((job: any) => {
+                    let isVisible = true;
+                    if (regTitle && regTitle !== job.regionsTitle) {
+                      isVisible = false;
+                    }
+                    if (expTitle && expTitle !== job.experienceTitle) {
+                      isVisible = false;
+                    }
+                    return isVisible;
+                  })
+                  .map((job: any) => {
+                    return (
+                      <div className="col-sm-5" key={job.id}>
+                        <div className="card">
+                          <h5 className="card-header">{job.username}</h5>
 
-                        <div className="card-body">
-                          <h3 className="card-title"> {job.title}</h3>
-                          <div className="card-det">
-                            {
-                              // eslint-disable-next-line @next/next/no-img-element
-                              <img
-                                className="card-text"
-                                id="location"
-                                src="/loc.png"
-                                alt="location"
-                              ></img>
-                            }
+                          <div className="card-body">
+                            <h3 className="card-title"> {job.title}</h3>
+                            <div className="card-det">
+                              {
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  className="card-text"
+                                  id="location"
+                                  src="/loc.png"
+                                  alt="location"
+                                ></img>
+                              }
 
-                            <p className="card-text">{job.regionsTitle}</p>
-                            {
-                              // eslint-disable-next-line @next/next/no-img-element
-                              <img
-                                className="card-text"
-                                id="exp-icon"
-                                src="/exp.png"
-                                alt="experience icon"
-                              ></img>
-                            }
-                            <p className="card-text">{job.experienceTitle}</p>
+                              <p className="card-text">{job.regionsTitle}</p>
+                              {
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  className="card-text"
+                                  id="exp-icon"
+                                  src="/exp.png"
+                                  alt="experience icon"
+                                ></img>
+                              }
+                              <p className="card-text">{job.experienceTitle}</p>
+                            </div>
+                            <a href={`jobs/${job.id}`} className="see-job">
+                              See Job
+                            </a>
                           </div>
-                          <a href={`jobs/${job.id}`} className="see-job">
-                            See Job
-                          </a>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             </div>
           )}
@@ -354,9 +302,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const regions = await getRegions();
   const experience = await getExperience();
-  const regionFiltered = await getJobsByRegionTitle(regions[0].title);
-  //console.log(regionFiltered);
-  //console.log(regions[0].title);
 
   return {
     props: { ...json, regions, experience },
