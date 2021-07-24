@@ -104,7 +104,7 @@ export default function Jobs(props: Props) {
                 Add a Shift
               </Button>
               <Modal isOpen={modal} toggle={toggle} fade={false}>
-                <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+                <ModalHeader toggle={toggle} className="modal-title">Add Job</ModalHeader>
                 <ModalBody>
                   <Form>
                     <Input

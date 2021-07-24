@@ -286,3 +286,21 @@ select {
   font-family: 'DM Serif Text', serif;
   margin-bottom: 1em;
 }
+.btn-primary {
+  color: #fff;
+  background-color: #50b9c5 !important;
+  border-color: #50b9c5 !important;
+}
+.modal-title {
+  font-family: 'Adamina', serif;
+  font-family: 'DM Serif Text', serif;
+}
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+  border-top: 0px;
+  height: 10em;
+}
+.close {
+  background-color: #f6c44d;
+  border: none;
+  color: white;
+}
