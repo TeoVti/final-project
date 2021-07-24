@@ -16,7 +16,7 @@ export default async function singleJobHandler(
   res: NextApiResponse,
 ) {
   const allJobs = await getAllJobs();
-  //console.log('allJobs', allJobs);
+  // console.log('allJobs', allJobs);
 
   const validSession = await getValidSessionByToken(req.cookies.sessionToken);
   // console.log('req.cookies', req.cookies.sessionToken);

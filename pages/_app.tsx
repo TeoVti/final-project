@@ -1,8 +1,12 @@
 import '../styles/globals.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-quill/dist/quill.snow.css';
 import { AppProps } from 'next/dist/next-server/lib/router/router';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useCallback, useEffect, useState } from 'react';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export default function App({ Component, pageProps }: AppProps) {
   const [username, setUsername] = useState<string>();

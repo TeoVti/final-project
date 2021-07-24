@@ -9,7 +9,7 @@ exports.up = async function up(sql) {
 			exp_id INT REFERENCES experience (id) ON DELETE CASCADE NOT NULL,
       region_id INT REFERENCES regions (id) ON DELETE CASCADE NOT NULL,
 			pay varchar(100),
-			details varchar(1000),
+			details varchar(10000),
       slug varchar(100) NOT NULL
     )
   `;

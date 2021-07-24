@@ -1,5 +1,7 @@
+import 'react-quill/dist/quill.snow.css';
 import { get } from 'js-cookie';
 import { GetServerSidePropsContext } from 'next';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -14,12 +16,9 @@ import {
 } from 'reactstrap';
 import { AllJobs } from '../../Components/AllJobs';
 import Layout from '../../Components/Layout';
-import {
-  getExperience,
-  getJobsByExperienceTitle,
-  getJobsByRegionTitle,
-  getRegions,
-} from '../../util/database';
+import { getExperience, getRegions } from '../../util/database';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 type Props = {
   username?: string;
@@ -50,6 +49,7 @@ export default function Jobs(props: Props) {
   const [allJobs, setAllJobs] = useState(props.allJobs);
   const [regTitle, setRegTitle] = useState('');
   const [expTitle, setExpTitle] = useState('');
+  const [value, setValue] = useState('');
 
   // Handle click on "Select By Category" Button
 
@@ -96,9 +96,7 @@ export default function Jobs(props: Props) {
       </Head>
       <Layout username={props.username} />
       <div className="jobs-page">
-        <h1 className="job-board">Job Board</h1>
         <div>
-          {' '}
           {props.username ? (
             <div className="my-jobs-section">
               <h2>My Posts</h2>
@@ -159,13 +157,12 @@ export default function Jobs(props: Props) {
                         setPay(event.currentTarget.value);
                       }}
                     />
-                    <Input
+
+                    <ReactQuill
+                      className="quill"
                       value={details}
-                      required
                       placeholder="Details"
-                      onChange={(event) => {
-                        setDetails(event.currentTarget.value);
-                      }}
+                      onChange={setDetails}
                     />
                   </Form>
                 </ModalBody>
@@ -187,60 +184,6 @@ export default function Jobs(props: Props) {
               <div className="row">
                 {props.allJobsByValidSessionUser.map(
                   (job: any, index: number) => {
-                    return (
-                      <div className="col-sm-5" key={index}>
-                        <div className="card">
-                          <h5 className="card-header">
-                            {job.regionsTitle} {job.experienceTitle}
-                          </h5>
-
-                          <div className="card-body">
-                            <h3 className="card-title"> {job.title}</h3>
-                            <p className="card-text">{job.details}</p>
-                            <a
-                              href={`jobs/${job.id}`}
-                              className="btn btn-primary"
-                            >
-                              See Job
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  },
-                )}
-              </div>{' '}
-            </div>
-          ) : (
-            <div>
-              <div className="filter">
-                <h5>Filter</h5>
-                <AllJobs
-                  options={props.regions}
-                  value={regTitle}
-                  filterSetter={setRegTitle}
-                  name="reg"
-                />
-                <AllJobs
-                  options={props.experience}
-                  value={expTitle}
-                  filterSetter={setExpTitle}
-                  name="exp"
-                />
-              </div>
-              <div className="container row">
-                {allJobs
-                  .filter((job: any) => {
-                    let isVisible = true;
-                    if (regTitle && regTitle !== job.regionsTitle) {
-                      isVisible = false;
-                    }
-                    if (expTitle && expTitle !== job.experienceTitle) {
-                      isVisible = false;
-                    }
-                    return isVisible;
-                  })
-                  .map((job: any) => {
                     return (
                       <div className="col-sm-5" key={job.id}>
                         <div className="card">
@@ -278,7 +221,89 @@ export default function Jobs(props: Props) {
                         </div>
                       </div>
                     );
+                  },
+                )}
+              </div>{' '}
+            </div>
+          ) : (
+            <div>
+              <div className="filter">
+                <h3 className="all-jobs-text">All Jobs</h3>
+                <AllJobs
+                  options={props.regions}
+                  value={regTitle}
+                  filterSetter={setRegTitle}
+                  placeholder="Region"
+                />
+                <AllJobs
+                  options={props.experience}
+                  value={expTitle}
+                  filterSetter={setExpTitle}
+                  placeholder="Experience"
+                />
+              </div>
+              <div className="container row" style={{ position: 'inherit' }}>
+                {allJobs
+                  .filter((job: any) => {
+                    let isVisible = true;
+                    if (regTitle && regTitle !== job.regionsTitle) {
+                      isVisible = false;
+                    }
+                    if (expTitle && expTitle !== job.experienceTitle) {
+                      isVisible = false;
+                    }
+                    return isVisible;
+                  })
+                  .map((job: any) => {
+                    return (
+                      <div className="col-sm-5" key={job.id}>
+                        <div className="card">
+                          <h2 className="card-header">{job.title}</h2>
+                          <div className="card-body">
+                            <div style={{ display: 'flex' }}>
+                              {
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  className="card-text"
+                                  id="location"
+                                  src="/hsp.png"
+                                  alt="location"
+                                ></img>
+                              }
+                              <h5 className="card-title"> {job.username}</h5>
+                            </div>
+                            <div className="card-det">
+                              {
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  className="card-text"
+                                  id="location"
+                                  src="/loc.png"
+                                  alt="location"
+                                ></img>
+                              }
+
+                              <p className="card-text">{job.regionsTitle}</p>
+                              {
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  className="card-text"
+                                  id="exp-icon"
+                                  src="/exp.png"
+                                  alt="experience icon"
+                                ></img>
+                              }
+                              <p className="card-text">{job.experienceTitle}</p>
+                            </div>
+                            <a href={`jobs/${job.id}`} className="see-job">
+                              See Job
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    );
                   })}
+                <div className="col-sm-5"></div>
               </div>
             </div>
           )}

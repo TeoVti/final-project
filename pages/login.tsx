@@ -57,14 +57,14 @@ export default function Login(props: Props) {
           >
             <div>
               <div>
-                <h3 style={{ marginBottom: '1em' }}>Log in to MedJobs</h3>
+                <h3 className="log-in-text">Log in to MedJobs</h3>
                 <div>
                   <label>
                     <input
                       className="register-input"
                       data-cy="users-management-create-username"
                       value={username}
-                      placeholder="Username"
+                      placeholder="Institution Name"
                       onChange={(event) => {
                         setUsername(event.currentTarget.value);
                       }}
@@ -93,7 +93,7 @@ export default function Login(props: Props) {
               </div>
             </div>
           </form>
-          <div>
+          <div style={{ marginTop: '1em' }}>
             {
               // eslint-disable-next-line react/no-unescaped-entities
               <h5>Don't have an account?</h5>

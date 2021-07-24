@@ -338,6 +338,7 @@ export async function getAllJobs() {
       jobs.pay,
       jobs.details,
       users.username,
+      users.email,
       experience.title as experience_title,
       regions.title as regions_title
     FROM
@@ -434,54 +435,19 @@ export async function getJobByJobId(jobId) {
   return jobs.map((job) => camelcaseKeys(job))[0];
 }
 
-export async function getJobsByRegionTitle(regionTitle) {
-  const jobs = await sql`
-  SELECT
-    DISTINCT jobs.id as id,
-    jobs.title as title,
-    exp_id,
-    region_id,
-    slug,
-    pay,
-    details,
-    experience.title as experience_title,
-    regions.title as regions_title
-  FROM
-    jobs,
-    regions,
-    experience
-  WHERE
-    regions.title = ${regionTitle}
-  AND
-    exp_id = experience.id
-  AND
-    region_id = regions.id
-  `;
-  return jobs.map((job) => camelcaseKeys(job));
-}
+export async function getEmailByJobId(jobId) {
+  if (!jobId) return undefined;
 
-export async function getJobsByExperienceTitle(expTitle) {
   const jobs = await sql`
-  SELECT
-    DISTINCT jobs.id as id,
-    jobs.title as title,
-    exp_id,
-    region_id,
-    slug,
-    pay,
-    details,
-    experience.title as experience_title,
-    regions.title as regions_title
-  FROM
-    jobs,
-    regions,
-    experience
-  WHERE
-    experience.title = ${expTitle}
-  AND
-    exp_id = experience.id
-  AND
-    region_id = regions.id
+    SELECT
+      jobs.id,
+      jobs.title,
+      users.email
+    FROM
+      jobs,
+      users
+    WHERE
+      jobs.id = ${jobId}
   `;
-  return jobs.map((job) => camelcaseKeys(job));
+  return jobs.map((job) => camelcaseKeys(job))[0];
 }

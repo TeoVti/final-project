@@ -1,7 +1,15 @@
+import 'react-quill/dist/quill.snow.css';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Layout from '../../Components/Layout';
-import { deleteJobByJobId, getJobByJobId } from '../../util/database';
+import {
+  deleteJobByJobId,
+  getEmailByJobId,
+  getJobByJobId,
+} from '../../util/database';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export default function SingleJob(props: any) {
   const router = useRouter();
@@ -11,6 +19,8 @@ export default function SingleJob(props: any) {
     });
     router.push(`/jobs`);
   }
+  let email = props.email.email;
+  let text = props.job.details;
   return (
     <>
       <Head>
@@ -19,17 +29,23 @@ export default function SingleJob(props: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout username={props.username} />
-      <h3>{props.job.title}</h3>
-      <p>
-        {props.job.regionsTitle} {console.log(props.username)}
-      </p>
-      <span>
-        {props.username ? (
-          <button onClick={() => deleteJobByJobI(props.job.id)}>Delete</button>
-        ) : (
-          <button>Apply</button>
-        )}
-      </span>
+      <div className="job-page">
+        <h3>{props.job.title}</h3>
+        <p>{}</p>
+        <div
+          dangerouslySetInnerHTML={{ __html: text }}
+          className="container-sm"
+        ></div>
+        <span>
+          {props.username ? (
+            <button onClick={() => deleteJobByJobI(props.job.id)}>
+              Delete
+            </button>
+          ) : (
+            <a href={`mailto:${email}`}>Email Us</a>
+          )}
+        </span>
+      </div>
     </>
   );
 }
@@ -37,11 +53,13 @@ export default function SingleJob(props: any) {
 export async function getServerSideProps(context: any) {
   let jobid = context.query.jobId;
   const job = await getJobByJobId(jobid);
+  const email = await getEmailByJobId(jobid);
 
   console.log('job', job);
   return {
     props: {
       job: job,
+      email: email || null,
     },
   };
 }

@@ -8,8 +8,8 @@ type Props = {
 
 export default function Header(props: Props) {
   const router = useRouter();
-  const [navBackground, setNavBackground] = useState(false);
-  const navRef = useRef();
+  const [navBackground, setNavBackground] = useState<boolean | undefined>(false);
+  const navRef = useRef<boolean | undefined>();
   navRef.current = navBackground;
   useEffect(() => {
     const handleScroll = () => {

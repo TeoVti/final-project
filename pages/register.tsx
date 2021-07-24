@@ -27,7 +27,7 @@ export default function Register(props: Props) {
       <Layout username={props.username} />
       <div className="register-page">
         <div className="register-card">
-          <h3 style={{ marginBottom: '1em' }}>Join MedJobs</h3>
+          <h3 className="reg-text">Join MedJobs</h3>
           <form
             onSubmit={async (event) => {
               event.preventDefault();
@@ -62,7 +62,7 @@ export default function Register(props: Props) {
                 <input
                   className="register-input"
                   value={username}
-                  placeholder="Registration Number"
+                  placeholder="Institution Name"
                   onChange={(event) => {
                     setUsername(event.currentTarget.value);
                   }}
