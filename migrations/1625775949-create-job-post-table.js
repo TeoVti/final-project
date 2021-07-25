@@ -8,6 +8,7 @@ exports.up = async function up(sql) {
 			user_id INT REFERENCES users (id) ON DELETE CASCADE NOT NULL,
 			exp_id INT REFERENCES experience (id) ON DELETE CASCADE NOT NULL,
       region_id INT REFERENCES regions (id) ON DELETE CASCADE NOT NULL,
+      day varchar(100) NOT NULL,
 			pay varchar(100),
 			details varchar(10000),
       slug varchar(100) NOT NULL

@@ -265,6 +265,7 @@ select {
 }
 .job-page {
   padding-top: 5em;
+  padding-bottom: 2em;
 }
 .register {
   color: #00bcd4 !important;

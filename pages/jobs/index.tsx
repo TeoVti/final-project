@@ -49,7 +49,8 @@ export default function Jobs(props: Props) {
   const [allJobs, setAllJobs] = useState(props.allJobs);
   const [regTitle, setRegTitle] = useState('');
   const [expTitle, setExpTitle] = useState('');
-  const [value, setValue] = useState('');
+  const [day, setDay] = useState('');
+  const [dayy, setDayy] = useState('');
 
   // Handle click on "Select By Category" Button
 
@@ -71,6 +72,7 @@ export default function Jobs(props: Props) {
         expId: Number(expId),
         pay: pay,
         details: details,
+        day: day,
       }),
     });
 
@@ -86,6 +88,10 @@ export default function Jobs(props: Props) {
     }
     router.push(`/jobs`);
   }
+
+  let clearAllFilters = () => {
+    setDayy(''), setExpTitle(''), setRegTitle('');
+  };
 
   return (
     <div>
@@ -104,7 +110,9 @@ export default function Jobs(props: Props) {
                 Add a Shift
               </Button>
               <Modal isOpen={modal} toggle={toggle} fade={false}>
-                <ModalHeader toggle={toggle} className="modal-title">Add Job</ModalHeader>
+                <ModalHeader toggle={toggle} className="modal-title">
+                  Add Job
+                </ModalHeader>
                 <ModalBody>
                   <Form>
                     <Input
@@ -116,6 +124,15 @@ export default function Jobs(props: Props) {
                         setTitle(event.currentTarget.value);
                       }}
                     />
+                    <Input
+                      type="date"
+                      placeholder="dd/mm/yyyy"
+                      value={day}
+                      required
+                      onChange={(event) => {
+                        setDay(event.currentTarget.value);
+                      }}
+                    ></Input>
                     <Input
                       type="select"
                       value={regionId}
@@ -190,7 +207,11 @@ export default function Jobs(props: Props) {
                           <h5 className="card-header">{job.username}</h5>
 
                           <div className="card-body">
-                            <h3 className="card-title"> {job.title}</h3>
+                            <h3 className="card-title">
+                              {' '}
+                              {job.title}
+                              {console.log(job.day)}
+                            </h3>
                             <div className="card-det">
                               {
                                 // eslint-disable-next-line @next/next/no-img-element
@@ -241,6 +262,16 @@ export default function Jobs(props: Props) {
                   filterSetter={setExpTitle}
                   placeholder="Experience"
                 />
+                <Input
+                  type="date"
+                  placeholder="dd/mm/yyyy"
+                  value={dayy}
+                  required
+                  onChange={(event) => {
+                    setDayy(event.currentTarget.value);
+                  }}
+                ></Input>
+                <button onClick={clearAllFilters}>Clear All Filters</button>
               </div>
               <div className="container row" style={{ position: 'inherit' }}>
                 {allJobs
@@ -250,6 +281,9 @@ export default function Jobs(props: Props) {
                       isVisible = false;
                     }
                     if (expTitle && expTitle !== job.experienceTitle) {
+                      isVisible = false;
+                    }
+                    if (dayy && dayy !== job.day) {
                       isVisible = false;
                     }
                     return isVisible;
@@ -324,7 +358,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Wait for the response of the fetch inside /jobs/index.ts and then transform it into json
   const json = await response.json();
   //console.log('API decoded JSON from response', json.allJobsByValidSessionUser);
-
   const regions = await getRegions();
   const experience = await getExperience();
 

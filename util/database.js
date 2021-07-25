@@ -245,17 +245,18 @@ export async function createJob(
   userId,
   expId,
   regionId,
+  day,
   pay,
   details,
   slug,
 ) {
   const jobs = await sql`
     INSERT INTO jobs
-      (title, user_id, exp_id, region_id, pay, details, slug)
+      (title, user_id, exp_id, region_id, day, pay, details, slug)
     VALUES
-      (${title}, ${userId}, ${expId}, ${regionId}, ${pay}, ${details}, ${slug})
+      (${title}, ${userId}, ${expId}, ${regionId}, ${day}, ${pay}, ${details}, ${slug} )
     RETURNING
-    title, user_id, exp_id, region_id, pay, details, slug
+    title, user_id, day, exp_id, region_id, day, pay, details, slug
   `;
   return jobs.map((job) => camelcaseKeys(job))[0];
 }
@@ -337,6 +338,7 @@ export async function getAllJobs() {
       jobs.slug,
       jobs.pay,
       jobs.details,
+      jobs.day,
       users.username,
       users.email,
       experience.title as experience_title,
@@ -370,6 +372,7 @@ export async function getJobsByValidSessionUser(validSessionUserId) {
       jobs.region_id,
       jobs.slug,
       jobs.pay,
+      jobs.day,
       jobs.details,
       users.username,
       experience.title as experience_title,

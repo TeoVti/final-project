@@ -9,7 +9,7 @@ import { generateSlug } from '../../../util/generateSlug';
 import { generateTitle } from '../../../util/generateTitle';
 import { ApplicationError, User } from '../../../util/types';
 
-export type CreateSeedResponse =
+export type CreateJobResponse =
   | {
       job: any;
       user?: User;
@@ -19,14 +19,14 @@ export type CreateSeedResponse =
 
 export default async function createJobHandler(
   req: NextApiRequest,
-  res: NextApiResponse<CreateSeedResponse>,
+  res: NextApiResponse<CreateJobResponse>,
 ) {
   if (req.method === 'POST') {
     const validSession = await getValidSessionByToken(req.cookies.sessionToken);
     // console.log('validSession', validSession);
 
     // Retrieve title, etc. from the request body from the frontend
-    const { title, expId, regionId, pay, details } = req.body;
+    const { title, expId, regionId, day, pay, details } = req.body;
 
     // Declare variables for form validation
     const responseErrorObject: ApplicationError[] = [];
@@ -54,6 +54,7 @@ export default async function createJobHandler(
       validSession.userId,
       expId,
       regionId,
+      day,
       pay,
       details,
       slug,

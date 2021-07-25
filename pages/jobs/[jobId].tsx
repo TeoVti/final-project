@@ -3,11 +3,7 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Layout from '../../Components/Layout';
-import {
-  deleteJobByJobId,
-  getEmailByJobId,
-  getJobByJobId,
-} from '../../util/database';
+import { getEmailByJobId, getJobByJobId } from '../../util/database';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -30,19 +26,21 @@ export default function SingleJob(props: any) {
       </Head>
       <Layout username={props.username} />
       <div className="job-page">
-        <h3>{props.job.title}</h3>
+        <h3 style={{ textAlign: 'center' }}>{props.job.title}</h3>
         <p>{}</p>
         <div
           dangerouslySetInnerHTML={{ __html: text }}
           className="container-sm"
         ></div>
-        <span>
+        <span style={{ marginLeft: '7em' }}>
           {props.username ? (
             <button onClick={() => deleteJobByJobI(props.job.id)}>
-              Delete
+              Delete Job
             </button>
           ) : (
-            <a href={`mailto:${email}`}>Email Us</a>
+            <a href={`mailto:${email}`} className="see-job">
+              Apply
+            </a>
           )}
         </span>
       </div>
@@ -54,8 +52,6 @@ export async function getServerSideProps(context: any) {
   let jobid = context.query.jobId;
   const job = await getJobByJobId(jobid);
   const email = await getEmailByJobId(jobid);
-
-  console.log('job', job);
   return {
     props: {
       job: job,
