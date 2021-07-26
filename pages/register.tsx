@@ -115,15 +115,25 @@ export default function Register(props: Props) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Redirect from HTTP to HTTPS on Heroku
+  if (
+    context.req.headers.host &&
+    context.req.headers['x-forwarded-proto'] &&
+    context.req.headers['x-forwarded-proto'] !== 'https'
+  ) {
+    return {
+      redirect: {
+        destination: `https://${context.req.headers.host}/register`,
+        permanent: true,
+      },
+    };
+  }
+
   const crypto = await import('crypto');
   const { createSerializedRegisterSessionTokenCookie } = await import(
     '../util/cookies'
   );
-  const {
-    insertFiveMinuteSessionWithoutUserId,
-    deleteExpiredSessions,
-    getValidSessionByToken,
-  } = await import('../util/database');
+  const { insertFiveMinuteSessionWithoutUserId, deleteExpiredSessions } =
+    await import('../util/database');
 
   // Import and initialize the `csrf` library
   const Tokens = await (await import('csrf')).default;
@@ -131,14 +141,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   // Get session information if user is already logged in
   const sessionToken = context.req.cookies.sessionToken;
-  const session = await getValidSessionByToken(sessionToken);
+  const session = await generateCsrfSecretByToken(sessionToken);
   if (session) {
     // Redirect the user when they have a session
     // token by returning an object with the `redirect` prop
     // https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
     return {
       redirect: {
-        destination: `/register`,
+        destination: `/jobs`,
         permanent: false,
       },
     };

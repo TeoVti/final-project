@@ -61,7 +61,7 @@ export default function Jobs(props: Props) {
   const toggle = () => setModal(!modal);
 
   async function clickHandler() {
-    const response = await fetch(`${process.env.API_BASE_URL}/jobs/create`, {
+    const response = await fetch(`/api/jobs/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -403,7 +403,9 @@ export default function Jobs(props: Props) {
                                 marginBottom: '0.5em',
                               }}
                             >
-                              <Link href={`jobs/${job.id}`}>
+                              <Link
+                                href={`http://localhost:3000/jobs/${job.id}`}
+                              >
                                 <a className="see-job">See Job</a>
                               </Link>
                             </div>
@@ -423,7 +425,7 @@ export default function Jobs(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const response = await fetch(`${process.env.API_BASE_URL}/jobs`, {
+  const response = await fetch(`http://localhost:3000/api/jobs`, {
     method: 'GET',
     headers: {
       cookie: context.req.headers.cookie || '',

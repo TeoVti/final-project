@@ -117,6 +117,19 @@ export default function Login(props: Props) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Redirect from HTTP to HTTPS on Heroku
+  // Redirect from HTTP to HTTPS on Heroku
+  if (
+    context.req.headers.host &&
+    context.req.headers['x-forwarded-proto'] &&
+    context.req.headers['x-forwarded-proto'] !== 'https'
+  ) {
+    return {
+      redirect: {
+        destination: `https://${context.req.headers.host}/login`,
+        permanent: true,
+      },
+    };
+  }
   const sessionToken = context.req.cookies.sessionToken;
   // console.log('sessionToken on login.tsx in gSSP', sessionToken);
 

@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import {
   createJob,
+  getSlugsByUserId,
   getUserById,
   getValidSessionByToken,
 } from '../../../util/database';
