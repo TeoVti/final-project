@@ -5,7 +5,6 @@ export default async function singleJobHandler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  console.log('HTTP Method (aka verb)', req.method);
   let jobId = req.query.jobId;
 
   if (req.method === 'GET') {

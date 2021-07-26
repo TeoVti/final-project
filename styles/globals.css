@@ -170,8 +170,11 @@ select:focus {
 }
 .filter {
   display: flex;
-
   height: 5em;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: baseline;
 }
 .card-header {
   font-size: 1.5em;
@@ -189,27 +192,36 @@ select:focus {
 }
 .card-det {
   display: flex;
+  justify-content: space-between;
 }
 .card-title {
   font-size: 1.1em;
 }
 #exp-icon {
-  margin-right: 0.3em;
   margin-top: 0.3em;
   width: 0.8em;
   height: 1em;
-  margin-left: 2em;
 }
 
 .see-job {
   padding: 0.3em;
   border-radius: 7px;
-  color: rgb(255, 255, 255);
+  color: rgb(255, 255, 255) !important;
   background-color: #50b9c5;
   border: solid #50b9c5;
   cursor: pointer;
   font-size: 20px;
 }
+.delete-job {
+  padding: 0.3em;
+  border-radius: 7px;
+  color: rgb(255, 255, 255) !important;
+  background-color: #b65d47;
+  border: solid #b65d47;
+  cursor: pointer;
+  font-size: 20px;
+}
+
 .job-board {
   text-align: center;
   margin-bottom: 1em;
@@ -235,9 +247,7 @@ select {
   word-wrap: normal;
 }
 .Region {
-  margin-right: 3em;
   width: 4.5em;
-  margin-left: 5.6em;
 }
 
 .Region > option {
@@ -273,7 +283,6 @@ select {
 }
 .all-jobs-text {
   padding: 25px;
-  margin-left: 7.4em;
   font-family: 'Adamina', serif;
   font-family: 'DM Serif Text', serif;
 }
@@ -304,4 +313,20 @@ select {
   background-color: #f6c44d;
   border: none;
   color: white;
+}
+.select-date {
+  height: 50%;
+  width: 13em !important;
+}
+.clear-filters {
+  background-color: #f6c44d;
+  color: white;
+  border: #f6c44d;
+  border-radius: 3px;
+}
+.calendar-modal {
+  margin-top: 1em;
+}
+.container-sm {
+  padding: 1em 10em 1em 10em !important;
 }

@@ -3,6 +3,7 @@ import { get } from 'js-cookie';
 import { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import {
@@ -107,7 +108,7 @@ export default function Jobs(props: Props) {
             <div className="my-jobs-section">
               <h2>My Posts</h2>
               <Button color="success" onClick={toggle}>
-                Add a Shift
+                Post a Job
               </Button>
               <Modal isOpen={modal} toggle={toggle} fade={false}>
                 <ModalHeader toggle={toggle} className="modal-title">
@@ -125,6 +126,7 @@ export default function Jobs(props: Props) {
                       }}
                     />
                     <Input
+                      className="calendar-modal"
                       type="date"
                       placeholder="dd/mm/yyyy"
                       value={day}
@@ -204,40 +206,79 @@ export default function Jobs(props: Props) {
                     return (
                       <div className="col-sm-5" key={job.id}>
                         <div className="card">
-                          <h5 className="card-header">{job.username}</h5>
-
+                          <h2 className="card-header">{job.title}</h2>
                           <div className="card-body">
-                            <h3 className="card-title">
-                              {' '}
-                              {job.title}
-                              {console.log(job.day)}
-                            </h3>
-                            <div className="card-det">
-                              {
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
-                                  className="card-text"
-                                  id="location"
-                                  src="/loc.png"
-                                  alt="location"
-                                ></img>
-                              }
-
-                              <p className="card-text">{job.regionsTitle}</p>
-                              {
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
-                                  className="card-text"
-                                  id="exp-icon"
-                                  src="/exp.png"
-                                  alt="experience icon"
-                                ></img>
-                              }
-                              <p className="card-text">{job.experienceTitle}</p>
+                            <div
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                              }}
+                            >
+                              <div style={{ display: 'flex' }}>
+                                {
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    className="card-text"
+                                    id="location"
+                                    src="/hsp.png"
+                                    alt="location"
+                                  ></img>
+                                }
+                                <h5 className="card-title"> {job.username}</h5>
+                              </div>
+                              <div style={{ display: 'flex' }}>
+                                {
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    className="card-text"
+                                    id="exp-icon"
+                                    src="/exp.png"
+                                    alt="experience icon"
+                                  ></img>
+                                }
+                                <p className="card-text">
+                                  {job.experienceTitle}
+                                </p>
+                              </div>
                             </div>
-                            <a href={`jobs/${job.id}`} className="see-job">
-                              See Job
-                            </a>
+                            <div className="card-det">
+                              <div style={{ display: 'flex' }}>
+                                {
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    className="card-text"
+                                    id="location"
+                                    src="/loc.png"
+                                    alt="location"
+                                  ></img>
+                                }
+                                <p className="card-text">{job.regionsTitle}</p>
+                              </div>
+                              <div style={{ display: 'flex' }}>
+                                {
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    className="card-text"
+                                    id="location"
+                                    src="/calendar.png"
+                                    alt="location"
+                                  ></img>
+                                }
+                                <p>{job.day}</p>
+                              </div>
+                            </div>
+                            <div
+                              style={{
+                                textAlign: 'center',
+                                marginBottom: '0.5em',
+                              }}
+                            >
+                              <Link
+                                href={`http://localhost:3000/jobs/${job.id}`}
+                              >
+                                <a className="see-job">See Job</a>
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -263,6 +304,7 @@ export default function Jobs(props: Props) {
                   placeholder="Experience"
                 />
                 <Input
+                  className="select-date"
                   type="date"
                   placeholder="dd/mm/yyyy"
                   value={dayy}
@@ -271,7 +313,9 @@ export default function Jobs(props: Props) {
                     setDayy(event.currentTarget.value);
                   }}
                 ></Input>
-                <button onClick={clearAllFilters}>Clear All Filters</button>
+                <button onClick={clearAllFilters} className="clear-filters">
+                  Clear All Filters
+                </button>
               </div>
               <div className="container row" style={{ position: 'inherit' }}>
                 {allJobs
@@ -294,44 +338,77 @@ export default function Jobs(props: Props) {
                         <div className="card">
                           <h2 className="card-header">{job.title}</h2>
                           <div className="card-body">
-                            <div style={{ display: 'flex' }}>
-                              {
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
-                                  className="card-text"
-                                  id="location"
-                                  src="/hsp.png"
-                                  alt="location"
-                                ></img>
-                              }
-                              <h5 className="card-title"> {job.username}</h5>
+                            <div
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                              }}
+                            >
+                              <div style={{ display: 'flex' }}>
+                                {
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    className="card-text"
+                                    id="location"
+                                    src="/hsp.png"
+                                    alt="location"
+                                  ></img>
+                                }
+                                <h5 className="card-title"> {job.username}</h5>
+                              </div>
+                              <div style={{ display: 'flex' }}>
+                                {
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    className="card-text"
+                                    id="exp-icon"
+                                    src="/exp.png"
+                                    alt="experience icon"
+                                  ></img>
+                                }
+                                <p className="card-text">
+                                  {job.experienceTitle}
+                                </p>
+                              </div>
                             </div>
                             <div className="card-det">
-                              {
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
-                                  className="card-text"
-                                  id="location"
-                                  src="/loc.png"
-                                  alt="location"
-                                ></img>
-                              }
-
-                              <p className="card-text">{job.regionsTitle}</p>
-                              {
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
-                                  className="card-text"
-                                  id="exp-icon"
-                                  src="/exp.png"
-                                  alt="experience icon"
-                                ></img>
-                              }
-                              <p className="card-text">{job.experienceTitle}</p>
+                              <div style={{ display: 'flex' }}>
+                                {
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    className="card-text"
+                                    id="location"
+                                    src="/loc.png"
+                                    alt="location"
+                                  ></img>
+                                }
+                                <p className="card-text">{job.regionsTitle}</p>
+                              </div>
+                              <div style={{ display: 'flex' }}>
+                                {
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    className="card-text"
+                                    id="location"
+                                    src="/calendar.png"
+                                    alt="location"
+                                  ></img>
+                                }
+                                <p>{job.day}</p>
+                              </div>
                             </div>
-                            <a href={`jobs/${job.id}`} className="see-job">
-                              See Job
-                            </a>
+                            <div
+                              style={{
+                                textAlign: 'center',
+                                marginBottom: '0.5em',
+                              }}
+                            >
+                              <Link
+                                href={`http://localhost:3000/jobs/${job.id}`}
+                              >
+                                <a className="see-job">See Job</a>
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>

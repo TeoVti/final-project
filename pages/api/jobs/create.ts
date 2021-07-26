@@ -41,13 +41,6 @@ export default async function createJobHandler(
       slug = generateSlug(validSession.userId, title);
     }
 
-    // Check if slug is unique
-    const userSlugs = await getSlugsByUserId(validSession.userId);
-
-    const isSlugAlreadyUsed = userSlugs?.some(
-      (slugObject: any) => slugObject.slug === slug,
-    );
-
     // Save the job information to the database
     const job = await createJob(
       title,
@@ -60,19 +53,15 @@ export default async function createJobHandler(
       slug,
     );
 
-    console.log('successfully saved info in database');
+    //console.log('successfully saved info in database');
 
-    const user = await getUserById(job.userId);
+    const user = await getUserById(job?.userId);
     // console.log('user from create.ts', user);
 
     // Send response to frontend
     if (responseErrorObject.length > 0) {
       // If there is/are errors, return status code and errors to the frontend
-      console.log('responseErrorObject.length', responseErrorObject.length);
-      console.log('responseErrorObject bottom', responseErrorObject);
-      return res
-        .status(responseStatusCode)
-        .json({ errors: [responseErrorObject] });
+      return res.status(responseStatusCode);
     } else {
       // Return job and user response to the frontend
       return res.status(200).json({

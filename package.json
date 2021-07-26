@@ -2,12 +2,16 @@
   "name": "final-project",
   "version": "0.1.0",
   "private": true,
+  "cacheDirectories": [
+    ".next/cache"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate": "dotenv ley"
+    "migrate": "dotenv ley",
+    "heroku-postbuild": "yarn migrate up && yarn build"
   },
   "dependencies": {
     "argon2": "^0.28.2",
@@ -22,6 +26,7 @@
     "js-cookie": "^2.2.1",
     "ley": "^0.7.1",
     "next": "11.0.1",
+    "pg-connection-string": "^2.5.0",
     "postgres": "^2.0.0-beta.5",
     "react": "17.0.2",
     "react-bootstrap": "^1.6.1",

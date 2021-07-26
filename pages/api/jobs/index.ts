@@ -1,8 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import {
-  deleteJobByJobId,
   getAllJobs,
-  getJobByJobId,
   getJobsByValidSessionUser,
   getValidSessionByToken,
 } from '../../../util/database';

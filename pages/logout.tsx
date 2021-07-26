@@ -16,7 +16,7 @@ export default function Logout(props: Props) {
   return (
     <div>
       <Head>
-        <title>Logout | Digital Garden</title>
+        <title>Logout</title>
       </Head>
       <Layout username={props.username} />
       <div>

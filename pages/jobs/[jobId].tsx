@@ -10,7 +10,7 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 export default function SingleJob(props: any) {
   const router = useRouter();
   async function deleteJobByJobI(id: any) {
-    await fetch(`http://localhost:3000/api/jobs/${props.job.id}`, {
+    await fetch(`/api/jobs/${props.job.id}`, {
       method: 'DELETE',
     });
     router.push(`/jobs`);
@@ -32,9 +32,12 @@ export default function SingleJob(props: any) {
           dangerouslySetInnerHTML={{ __html: text }}
           className="container-sm"
         ></div>
-        <span style={{ marginLeft: '7em' }}>
+        <span style={{ marginLeft: '16em', color: 'white !important' }}>
           {props.username ? (
-            <button onClick={() => deleteJobByJobI(props.job.id)}>
+            <button
+              onClick={() => deleteJobByJobI(props.job.id)}
+              className="delete-job"
+            >
               Delete Job
             </button>
           ) : (
