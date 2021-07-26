@@ -403,9 +403,7 @@ export default function Jobs(props: Props) {
                                 marginBottom: '0.5em',
                               }}
                             >
-                              <Link
-                                href={`http://localhost:3000/jobs/${job.id}`}
-                              >
+                              <Link href={`jobs/${job.id}`}>
                                 <a className="see-job">See Job</a>
                               </Link>
                             </div>
