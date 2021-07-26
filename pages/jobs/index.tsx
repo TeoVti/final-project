@@ -61,7 +61,7 @@ export default function Jobs(props: Props) {
   const toggle = () => setModal(!modal);
 
   async function clickHandler() {
-    const response = await fetch(`http://localhost:3000/api/jobs/create`, {
+    const response = await fetch(`${process.env.API_BASE_URL}/jobs/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -425,7 +425,7 @@ export default function Jobs(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const response = await fetch(`http://localhost:3000/jobs`, {
+  const response = await fetch(`${process.env.API_BASE_URL}/jobs`, {
     method: 'GET',
     headers: {
       cookie: context.req.headers.cookie || '',
