@@ -15,7 +15,6 @@ export default function SingleJob(props: any) {
     });
     router.push(`/jobs`);
   }
-  let text = props.job.details;
   return (
     <>
       <Head>
@@ -28,7 +27,7 @@ export default function SingleJob(props: any) {
         <h3 style={{ textAlign: 'center' }}>{props.job.title}</h3>
         <p>{}</p>
         <div
-          dangerouslySetInnerHTML={{ __html: text }}
+          dangerouslySetInnerHTML={{ __html: props.job.details }}
           className="container-sm"
         ></div>
         <span style={{ marginLeft: '16em', color: 'white !important' }}>
