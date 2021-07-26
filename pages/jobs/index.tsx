@@ -425,7 +425,7 @@ export default function Jobs(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const response = await fetch(`http://localhost:3000/api/jobs`, {
+  const response = await fetch(`${process.env.API_BASE_URL}/jobs`, {
     method: 'GET',
     headers: {
       cookie: context.req.headers.cookie || '',
