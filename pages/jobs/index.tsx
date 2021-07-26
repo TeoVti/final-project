@@ -425,6 +425,19 @@ export default function Jobs(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  if (
+    context.req.headers.host &&
+    context.req.headers['x-forwarded-proto'] &&
+    context.req.headers['x-forwarded-proto'] !== 'https'
+  ) {
+    return {
+      redirect: {
+        destination: `https://${context.req.headers.host}/login`,
+        permanent: true,
+      },
+    };
+  }
+
   const response = await fetch(`${process.env.API_BASE_URL}/jobs`, {
     method: 'GET',
     headers: {
