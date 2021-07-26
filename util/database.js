@@ -3,9 +3,9 @@ import dotenvSafe from 'dotenv-safe';
 import postgres from 'postgres';
 import setPostgresDefaultsOnHeroku from './setPostgresDefaultsOnHeroku';
 
-dotenvSafe.config();
-
 setPostgresDefaultsOnHeroku();
+
+dotenvSafe.config();
 
 // Read the PostgreSQL secret connection information
 // (host, database, username, password) from the .env file
