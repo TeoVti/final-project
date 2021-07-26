@@ -15,7 +15,6 @@ export default function SingleJob(props: any) {
     });
     router.push(`/jobs`);
   }
-  let email = props.email.email;
   let text = props.job.details;
   return (
     <>
@@ -41,7 +40,7 @@ export default function SingleJob(props: any) {
               Delete Job
             </button>
           ) : (
-            <a href={`mailto:${email}`} className="see-job">
+            <a href={`mailto:${props.email.email}`} className="see-job">
               Apply
             </a>
           )}
