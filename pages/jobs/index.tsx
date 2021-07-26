@@ -432,7 +432,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   ) {
     return {
       redirect: {
-        destination: `https://${context.req.headers.host}/login`,
+        destination: `https://${context.req.headers.host}/jobs`,
         permanent: true,
       },
     };
