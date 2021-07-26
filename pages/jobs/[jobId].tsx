@@ -70,7 +70,7 @@ export async function getServerSideProps(context: any) {
   const email = await getEmailByJobId(jobid);
   return {
     props: {
-      job: job,
+      job: job || null,
       email: email || null,
     },
   };
