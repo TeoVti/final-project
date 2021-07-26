@@ -10,7 +10,7 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 export default function SingleJob(props: any) {
   const router = useRouter();
   async function deleteJobByJobI(id: any) {
-    await fetch(`/api/jobs/${props.job.id}`, {
+    await fetch(`${process.env.API_BASE_URL}/jobs/${props.job.id}`, {
       method: 'DELETE',
     });
     router.push(`/jobs`);
