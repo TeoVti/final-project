@@ -57,15 +57,17 @@ export async function getServerSideProps(context: any) {
   ) {
     return {
       redirect: {
-        destination: `https://${context.req.headers.host}/jobs`,
+        destination: `https://${context.req.headers.host}/jobs/${context.query.jobId}`,
         permanent: true,
       },
     };
   }
 
   let jobid = context.query.jobId;
+
   const job = await getJobByJobId(jobid);
   const email = await getEmailByJobId(jobid);
+  console.log(job);
   return {
     props: {
       job: job || null,
