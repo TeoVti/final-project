@@ -52,6 +52,19 @@ export default function SingleJob(props: any) {
 }
 
 export async function getServerSideProps(context: any) {
+  if (
+    context.req.headers.host &&
+    context.req.headers['x-forwarded-proto'] &&
+    context.req.headers['x-forwarded-proto'] !== 'https'
+  ) {
+    return {
+      redirect: {
+        destination: `https://${context.req.headers.host}/jobs`,
+        permanent: true,
+      },
+    };
+  }
+
   let jobid = context.query.jobId;
   const job = await getJobByJobId(jobid);
   const email = await getEmailByJobId(jobid);

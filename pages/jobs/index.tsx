@@ -272,13 +272,7 @@ export default function Jobs(props: Props) {
                                 textAlign: 'center',
                                 marginBottom: '0.5em',
                               }}
-                            >
-                              <Link
-                                href={`http://localhost:3000/jobs/${job.id}`}
-                              >
-                                <a className="see-job">See Job</a>
-                              </Link>
-                            </div>
+                            ></div>
                           </div>
                         </div>
                       </div>
@@ -402,13 +396,7 @@ export default function Jobs(props: Props) {
                                 textAlign: 'center',
                                 marginBottom: '0.5em',
                               }}
-                            >
-                              <Link
-                                href={`http://localhost:3000/jobs/${job.id}`}
-                              >
-                                <a className="see-job">See Job</a>
-                              </Link>
-                            </div>
+                            ></div>
                           </div>
                         </div>
                       </div>
