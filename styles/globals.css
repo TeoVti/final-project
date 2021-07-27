@@ -123,6 +123,15 @@ a {
   padding-bottom: 2em;
   min-height: 100vh;
 }
+.job-page {
+  padding-top: 8em;
+  background-image: url('/bckg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  padding-bottom: 2em;
+  min-height: 100vh;
+}
 .login-page {
   padding-top: 5em;
 }
@@ -185,7 +194,7 @@ select:focus {
   border-bottom: none !important;
 }
 #location {
-  margin-right: 0.3em;
+  margin-right: 0.4em;
   margin-top: 0.3em;
   width: 0.8em;
   height: 1em;
@@ -201,6 +210,7 @@ select:focus {
   margin-top: 0.3em;
   width: 0.8em;
   height: 1em;
+  margin-right: 0.3em;
 }
 
 .see-job {
@@ -220,6 +230,7 @@ select:focus {
   border: solid #f6c44d;
   cursor: pointer;
   font-size: 20px;
+  margin: auto;
 }
 
 .job-board {
@@ -248,6 +259,10 @@ select {
 }
 .Region {
   width: 4.5em;
+  font-size: 1.2em;
+}
+.Experience {
+  font-size: 1.2em;
 }
 
 .Region > option {

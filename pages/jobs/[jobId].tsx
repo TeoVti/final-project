@@ -23,14 +23,14 @@ export default function SingleJob(props: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout username={props.username} />
-      <div className="jobs-page">
-        <h3 style={{ textAlign: 'center' }}>{props.job.title}</h3>
+      <div className="job-page">
+        <h2 style={{ textAlign: 'center' }}>{props.job.title}</h2>
         <p>{}</p>
         <div
           dangerouslySetInnerHTML={{ __html: props.job.details }}
           className="container-sm"
         ></div>
-        <span style={{ marginLeft: '16em', color: 'white !important' }}>
+        <div style={{ display: 'flex', color: 'white !important' }}>
           {props.username ? (
             <button
               onClick={() => deleteJobByJobI(props.job.id)}
@@ -39,11 +39,15 @@ export default function SingleJob(props: any) {
               Delete Job
             </button>
           ) : (
-            <a href={`mailto:${props.email.email}`} className="see-job">
+            <a
+              href={`mailto:${props.email.email}`}
+              className="see-job"
+              style={{ margin: 'auto' }}
+            >
               Apply
             </a>
           )}
-        </span>
+        </div>
       </div>
     </>
   );
