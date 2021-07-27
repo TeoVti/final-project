@@ -20,8 +20,14 @@ export default function Logout(props: Props) {
       </Head>
       <Layout username={props.username} />
       <div>
-        <h1>You{"'"}ve successfully logged out</h1>
-        <div></div>
+        <h1 className="logout-text">You{"'"}ve successfully logged out</h1>
+        <div style={{ marginTop: '12em'}}>
+          <div className="square-reg"></div>
+          {
+            // eslint-disable-next-line @next/next/no-img-element
+            <img className="reg-dots" src="/dots.png" alt="hero"></img>
+          }
+        </div>
       </div>
     </div>
   );

@@ -115,7 +115,7 @@ a {
   padding-top: 5em;
 }
 .jobs-page {
-  padding-top: 5em;
+  padding-top: 8em;
   background-image: url('/bck.png');
   background-size: cover;
   background-repeat: no-repeat;
@@ -216,8 +216,8 @@ select:focus {
   padding: 0.3em;
   border-radius: 7px;
   color: rgb(255, 255, 255) !important;
-  background-color: #b65d47;
-  border: solid #b65d47;
+  background-color: #f6c44d;
+  border: solid #f6c44d;
   cursor: pointer;
   font-size: 20px;
 }
@@ -329,4 +329,26 @@ select {
 }
 .container-sm {
   padding: 1em 10em 1em 10em !important;
+}
+.post-bttn {
+  text-shadow: 0 0 0 white !important;
+  color: transparent !important;
+  background-color: #f6c44d !important;
+  border-color: #f6c44d !important;
+  margin-left: 16.6em;
+}
+.post-bttn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.my-posts {
+  font-family: 'Adamina', serif;
+  font-family: 'DM Serif Text', serif;
+}
+.logout-text {
+  width: fit-content;
+  padding-top: 8em;
+  margin-left: 2em;
+  font-family: 'Adamina', serif;
+  font-family: 'DM Serif Text', serif;
 }
